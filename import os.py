@@ -3,7 +3,7 @@ import shutil
 from datetime import datetime, timedelta
 
 def move_to_trash_and_delete(images_folder, trash_folder, delete_after_days=2):
-    # Überprüfe und erstelle die Ordner falls notwendig
+    # Überprüfe und erstelle Ordner falls notwendig
     for folder in [images_folder, trash_folder]:
         if not os.path.exists(folder):
             os.makedirs(folder)
@@ -17,7 +17,6 @@ def move_to_trash_and_delete(images_folder, trash_folder, delete_after_days=2):
             shutil.move(src_path, dest_path)
             print(f"{filename} wurde in den Trash-Ordner verschoben.")
     
-    # Lösche Dateien im Trash-Ordner, die älter als delete_after_days sind
     # Lösche Dateien im Trash-Ordner, die älter als delete_after_days sind
     delete_cutoff_date = datetime.now() - timedelta(days=delete_after_days)
     for filename in os.listdir(trash_folder):

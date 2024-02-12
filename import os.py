@@ -3,7 +3,7 @@ import shutil
 from datetime import datetime, timedelta
 
 def move_to_trash_and_delete(images_folder, trash_folder, delete_after_days=2):
-    # Überprüfe und erstelle Ordner falls notwendig
+    # Überprüfe und erstelle die Ordner falls notwendig
     for folder in [images_folder, trash_folder]:
         if not os.path.exists(folder):
             os.makedirs(folder)
@@ -18,6 +18,7 @@ def move_to_trash_and_delete(images_folder, trash_folder, delete_after_days=2):
             print(f"{filename} wurde in den Trash-Ordner verschoben.")
     
     # Lösche Dateien im Trash-Ordner, die älter als delete_after_days sind
+    # Lösche Dateien im Trash-Ordner, die älter als delete_after_days sind
     delete_cutoff_date = datetime.now() - timedelta(days=delete_after_days)
     for filename in os.listdir(trash_folder):
         file_path = os.path.join(trash_folder, filename)
@@ -31,6 +32,16 @@ def is_image_file(filename):
     return filename.lower().endswith((".jpg", ".jpeg", ".png", ".gif", ".bmp"))
 
 # Beispielaufruf der Funktion
-download_folder = r"C:\Users\noahn\Downloads"
-trash_folder = r"C:\Users\noahn\OneDrive\Desktop\Trash"
+user_name = os.getlogin()  # Dies erfasst den Benutzernamen des aktuell angemeldeten Benutzers
+download_folder = os.path.join("C:\\Users", user_name, "Downloads")
+trash_folder = os.path.join("C:\\Users", user_name, "Documents", "Trash")
+
+# Überprüfe, ob der Ordner bereits existiert, andernfalls erstelle ihn
+if not os.path.exists(trash_folder):
+    os.makedirs(trash_folder)
+    print("Ordner erstellt:", trash_folder)
+else:
+    print("Ordner existiert bereits:", trash_folder)
+
+
 move_to_trash_and_delete(download_folder, trash_folder)
